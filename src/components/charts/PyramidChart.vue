@@ -14,11 +14,11 @@ const mapStore = useMapStore();
 
 const chartOptions = ref({
 	chart: {
-		// offsetY: 15,
+		offsetY: -15,
 		stacked: true,
-		// toolbar: {
-		// 	show: false,
-		// },
+		toolbar: {
+			show: false,
+		},
 	},
 	colors: props.chart_config.color,
 	dataLabels: {
@@ -34,8 +34,8 @@ const chartOptions = ref({
 		bar: {
 			borderRadius: 2,
 			distributed: true,
-			horizontal: false,
-			barHeight: "100%",
+			horizontal: true,
+			barHeight: "90%",
 		},
 	},
 	stroke: {
@@ -45,16 +45,20 @@ const chartOptions = ref({
 	},
 	// The class "chart-tooltip" could be edited in /assets/styles/chartStyles.css
 	tooltip: {
-		x: {
-			formatter: function (val) {
-				return val;
-			},
+		custom: function ({ series, seriesIndex, dataPointIndex, w }) {
+			return (
+				'<div class="chart-tooltip">' +
+				"<h6>" +	
+				w.globals.seriesNames[seriesIndex] +
+				"</h6>" +
+				"<span>" +
+				Math.abs(series[seriesIndex][dataPointIndex]) +
+				` ${props.chart_config.unit}` +
+				"</span>" +
+				"</div>"
+			);
 		},
-		y: {
-			formatter: function (val) {
-				return Math.abs(val);
-			},
-		}
+		followCursor: true,
 	},
 	xaxis: {
 		axisBorder: {
@@ -63,15 +67,18 @@ const chartOptions = ref({
 		axisTicks: {
 			show: false,
 		},
-		type: "category",
-	},
-	yaxis: {
-		type: "category",
+		labels: {
+			formatter: function (val) {
+				return Math.abs(Math.round(val)) + "%"
+			}
+		},
+		categories: props.chart_config.categories ? props.chart_config.categories : [],
+		type: 'category',
 	},
 });
 
 const chartHeight = computed(() => {
-	return `${40 + props.series[0].data.length * 12}`;
+	return `${props.series[0].data.length * 16}`;
 });
 
 const selectedIndex = ref(null);
