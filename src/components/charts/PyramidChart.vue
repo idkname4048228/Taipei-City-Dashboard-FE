@@ -14,7 +14,7 @@ const mapStore = useMapStore();
 
 const chartOptions = ref({
 	chart: {
-		offsetY: -15,
+		offsetY: -20,
 		stacked: true,
 		toolbar: {
 			show: false,
