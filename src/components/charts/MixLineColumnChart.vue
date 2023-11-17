@@ -37,14 +37,15 @@ const chartOptions = ref({
 		// The class "chart-tooltip" could be edited in /assets/styles/chartStyles.css
 		custom: function ({ series, seriesIndex, dataPointIndex, w }) {
 			return '<div class="chart-tooltip">' +
-				'<h6>' + w.globals.seriesNames[seriesIndex] + 
+				'<h6>' + w.globals.seriesNames[0] + 
 				` - ${w.globals.labels[dataPointIndex]}` +
 				` ${props.chart_config.unit}` + '</h6>' +
-				'<span>'+ series[seriesIndex * 2][dataPointIndex] + props.chart_config.leftUnit + ' </span>' +
-				'<h6>' +  w.globals.seriesNames[seriesIndex + 1] + 
+				'<span>'+ series[seriesIndex][dataPointIndex] + props.chart_config.leftUnit + ' </span>' +
+				'<h6>' +  w.globals.seriesNames[1]+ 
 				` - ${w.globals.labels[dataPointIndex]}` +
 				` ${props.chart_config.unit}` + '</h6>' +
-				'<span>'+ series[seriesIndex * 2 + 1][dataPointIndex] + props.chart_config.rightUnit + ' </span>' +
+				'<span>'+ series[seriesIndex][dataPointIndex] + props.chart_config.rightUnit +' </span>' +
+				
 				'</div>';
 		},
 		enabled: true,
