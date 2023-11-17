@@ -36,17 +36,24 @@ const chartOptions = ref({
 	tooltip: {
 		// The class "chart-tooltip" could be edited in /assets/styles/chartStyles.css
 		custom: function ({ series, seriesIndex, dataPointIndex, w }) {
+			let mainTitle = '<h6>' + w.globals.seriesNames[seriesIndex] + 
+						` - ${w.globals.labels[dataPointIndex]}` +
+						` ${props.chart_config.unit}` + '</h6>' +
+						'<span>'+ series[seriesIndex][dataPointIndex] + ` ${props.chart_config.pointsUnits[seriesIndex]}` + ' </span>';
+			let otherTitle = '';
+			for (let index in w.globals.seriesNames){
+				if (index == seriesIndex)
+					continue;
+				otherTitle += "<br>" 
+				otherTitle += '<h6>' +  w.globals.seriesNames[index]+ 
+					` - ${w.globals.labels[dataPointIndex]}` +
+					` ${props.chart_config.unit}` + '</h6>' +
+					'<h6>'+ series[index][dataPointIndex] + ` ${props.chart_config.pointsUnits[index]}` +' </h6>';
+			}
 			return '<div class="chart-tooltip">' +
-				'<h6>' + w.globals.seriesNames[0] + 
-				` - ${w.globals.labels[dataPointIndex]}` +
-				` ${props.chart_config.unit}` + '</h6>' +
-				'<span>'+ series[seriesIndex][dataPointIndex] + props.chart_config.leftUnit + ' </span>' +
-				'<h6>' +  w.globals.seriesNames[1]+ 
-				` - ${w.globals.labels[dataPointIndex]}` +
-				` ${props.chart_config.unit}` + '</h6>' +
-				'<span>'+ series[seriesIndex][dataPointIndex] + props.chart_config.rightUnit +' </span>' +
-				
-				'</div>';
+					mainTitle + 
+					otherTitle +
+					'</div>';
 		},
 		enabled: true,
 		shared: true,
@@ -60,7 +67,7 @@ const chartOptions = ref({
 		tooltip: {
 			enabled: false,
 		},
-		categories: props.chart_config.categories
+		categories: props.chart_config.categories.map(category => category + props.chart_config.unit)
 	},
 	yaxis: [{}, {opposite: true}],
 });

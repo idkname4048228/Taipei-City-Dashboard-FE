@@ -4956,8 +4956,7 @@
 					"#368ecb", "#4FE632"
 				],
 				"unit": "月",
-				"leftUnit": "毫米",
-				"rightUnit": "度"
+				"pointsUnits": ["毫米", "度"]
 			},
 			"name": "氣候圖",
 			"source": "不知道"
